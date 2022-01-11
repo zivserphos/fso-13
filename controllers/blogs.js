@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { Blog } = require("../models/index");
+const { Blog, User } = require("../models/index");
 
 const BlogFinder = async (req, res, next) => {
   req.blog = await Blog.findByPk(req.params.id);
@@ -8,16 +8,28 @@ const BlogFinder = async (req, res, next) => {
 };
 
 router.get("/", async (req, res) => {
-  const notes = await Blog.findAll();
-  res.json(notes);
+  const blogs = await Blog.findAll({
+    attributes: { exclude: ["userId"] },
+    include: {
+      model: User,
+      attributes: ["name"],
+    },
+  });
+  res.json(blogs);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   try {
-    const blog = await Blog.create(req.body);
+    const user = await User.findByPk(req.decodedToken.id);
+    const blog = await Blog.create({
+      ...req.body,
+      userId: user.id,
+      date: new Date(),
+    });
     res.json(blog);
   } catch (error) {
-    return res.status(400).json({ error });
+    next(error);
+    // return res.status(400).json({ error });
   }
 });
 
@@ -30,12 +42,21 @@ router.get("/:id", BlogFinder, async (req, res) => {
 });
 
 router.delete("/:id", BlogFinder, async (req, res) => {
-  if (req.blog) {
+  if (req.blog && req.decodedToken.id === req.blog.userId) {
     await req.blog.destroy();
+    res.json("blog has deleted successfully");
+  } else {
+    res.status(401).json("UNAUTORIZED");
   }
-  res.status(204).end();
 });
 
-router.put("/:id");
+router.put("/:id", BlogFinder, async (req, res) => {
+  console.log(req.blog.toJSON());
+  if (req.blog) {
+    await req.blog.update({ likes: req.body.likes });
+    res.send(req.blog);
+  }
+  res.status(400).send("bad request");
+});
 
 module.exports = router;
