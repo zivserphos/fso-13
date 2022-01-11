@@ -42,7 +42,8 @@ router.get("/:id", BlogFinder, async (req, res) => {
 });
 
 router.delete("/:id", BlogFinder, async (req, res) => {
-  if (req.blog && req.decodedToken.id === req.blog.userId) {
+  if (!req.blog) res.status(404).json("not exist");
+  if (req.decodedToken.id === req.blog.userId) {
     await req.blog.destroy();
     res.json("blog has deleted successfully");
   } else {
