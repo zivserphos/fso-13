@@ -1,12 +1,13 @@
 POST http://localhost:3001/api/blogs HTTP/1.1
-Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pc2ltQGEuY29tIiwiaWQiOjEyLCJpYXQiOjE2NDIwMDExMzd9.IJBiOFdrtK0hqg2Ivg7e8m4cWq7mtrLdfs-WjL1fjdI
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pc2ltQGFhc2QuY29tIiwiaWQiOjEyLCJpYXQiOjE2NDIwMDIxNzl9.aeB22sI-pCdyQSjorLPBiWnxXd6AT0H8WNQdrUTpIRY
 Content-Type: application/json
 
 {
     "author": "von bamper",
     "title": "vonton",
     "url":"vonton.com",
-    "likes": 15
+    "likes": 15,
+    "year": 1992
 }
 
 ###
@@ -36,7 +37,7 @@ POST http://localhost:3001/api/login
 Content-Type: application/json
 
 {
-    "username": "nisim@a.com",
+    "username": "nisim@aasd.com",
     "password": "secret"
 }
 
