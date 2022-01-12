@@ -15,6 +15,11 @@ GET http://localhost:3001/api/blogs HTTP/1.1
 Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF2aSBIYUdhZG9sIiwiaWQiOjEsImlhdCI6MTY0MTkxODcwMn0.YUyIeSwq6WmBAZCDsd21YdlFA8a2MefZnExwBiCDGoA
 ###
 
+###
+GET http://localhost:3001/api/author/avi haShamen HTTP/1.1
+
+###
+
 POST http://localhost:3001/api/users HTTP/1.1
 Content-Type: application/json
 
