@@ -1,11 +1,11 @@
-const jwt = require("jsonwebtoken");
-const router = require("express").Router();
+const jwt = require('jsonwebtoken');
+const router = require('express').Router();
 
-const { SECRET } = require("../util/config");
+const { SECRET } = require('../util/config');
 
-const User = require("../models/user");
+const User = require('../models/user');
 
-router.post("/", async (request, response) => {
+router.post('/', async (request, response) => {
   const body = request.body;
 
   const user = await User.findOne({
@@ -14,10 +14,10 @@ router.post("/", async (request, response) => {
     },
   });
 
-  const passwordCorrect = body.password === "secret";
+  const passwordCorrect = body.password === 'secret';
   if (!(user && passwordCorrect)) {
     return response.status(401).json({
-      error: "invalid username or password",
+      error: 'invalid username or password',
     });
   }
 
