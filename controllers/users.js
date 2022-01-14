@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const validateEmail = require('../util/validateEmail');
 const { User, Blog, ReadingList } = require('../models');
+const { Op } = require('sequelize');
 
 router.get('/', async (req, res) => {
   const users = await User.findAll({
@@ -52,7 +53,16 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
+  console.log(req.query.read);
+  let where = {};
   try {
+    if (req.query.read) {
+      where = {
+        read: {
+          [Op.eq]: req.query.read,
+        },
+      };
+    }
     const user = await User.findByPk(req.params.id, {
       attributes: { exclude: [''] },
       include: [
@@ -63,6 +73,7 @@ router.get('/:id', async (req, res) => {
           through: {
             attributes: { exclude: ['userId', 'createdAt', 'updatedAt'] },
             through: { attributes: ['read', 'id'] },
+            where,
           },
         },
       ],
