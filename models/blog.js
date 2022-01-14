@@ -27,7 +27,7 @@ Blog.init(
     },
     year: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       validate: {
         min: 1991,
         max: 2022,
@@ -42,5 +42,7 @@ Blog.init(
     modelName: 'blog',
   }
 );
+
+console.log(Blog);
 
 module.exports = Blog;

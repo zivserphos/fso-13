@@ -1,13 +1,23 @@
 const router = require('express').Router();
 const validateEmail = require('../util/validateEmail');
-const { User, Blog } = require('../models');
+const { User, Blog, ReadingList } = require('../models');
 
 router.get('/', async (req, res) => {
   const users = await User.findAll({
-    include: {
-      model: Blog,
-      attributes: { exclude: ['userId'] },
-    },
+    include: [
+      {
+        model: Blog,
+        attributes: { exclude: ['userId'] },
+      },
+      {
+        model: Blog,
+        as: 'reading',
+        attributes: { exclude: ['userId'] },
+        through: {
+          attributes: [],
+        },
+      },
+    ],
   });
   res.json(users);
 });
@@ -42,11 +52,31 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  const user = await User.findByPk(req.params.id);
-  if (user) {
-    res.json(user);
-  } else {
-    res.status(404).end();
+  try {
+    const user = await User.findByPk(req.params.id, {
+      attributes: { exclude: [''] },
+      include: [
+        {
+          model: Blog,
+          as: 'reading',
+          attributes: { exclude: ['userId'] },
+          through: {
+            attributes: [],
+          },
+        },
+        {
+          model: ReadingList,
+          attributes: { exclude: ['userId', 'blogId'] },
+        },
+      ],
+    });
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).end();
+    }
+  } catch (err) {
+    console.log(err);
   }
 });
 

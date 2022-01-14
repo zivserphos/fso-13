@@ -1,13 +1,13 @@
 POST http://localhost:3001/api/blogs HTTP/1.1
-Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pc2ltQGFhc2QuY29tIiwiaWQiOjEyLCJpYXQiOjE2NDIwMDIxNzl9.aeB22sI-pCdyQSjorLPBiWnxXd6AT0H8WNQdrUTpIRY
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkJVTElMQUBhYXNkLmNvbSIsImlkIjoxMywiaWF0IjoxNjQyMTcwMDMxfQ.rzpbbjfVFOCmp-YnciCtvjVhPIOkujw_a44ndjNyEVo
 Content-Type: application/json
 
 {
-    "author": "von bamper",
-    "title": "vonton",
-    "url":"vonton.com",
-    "likes": 15,
-    "year": 1992
+    "author": "bulila123",
+    "title": "bub",
+    "url":"bublil",
+    "likes": 25,
+    "year": 1997
 }
 
 ###
@@ -30,14 +30,26 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3001/api/users HTTP/1.1
+GET http://localhost:3001/api/users/12 HTTP/1.1
+
+### 
+GET http://localhost:3001/api/readinglists HTTP/1.1
+
+###
+POST http://localhost:3001/api/readinglists HTTP/1.1
+Content-Type: application/json
+
+{
+    "userId": 13,
+    "blogId": 2
+}
 
 ### 
 POST http://localhost:3001/api/login
 Content-Type: application/json
 
 {
-    "username": "nisim@aasd.com",
+    "username": "BULILA@aasd.com",
     "password": "secret"
 }
 
