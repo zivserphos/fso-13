@@ -40,6 +40,11 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      enabled: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: false,
+      },
       created_at: {
         type: DataTypes.DATE,
       },

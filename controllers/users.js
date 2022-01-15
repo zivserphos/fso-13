@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const validateEmail = require('../util/validateEmail');
 const { User, Blog, ReadingList } = require('../models');
 const { Op } = require('sequelize');
 
@@ -21,35 +20,6 @@ router.get('/', async (req, res) => {
     ],
   });
   res.json(users);
-});
-
-// router.post("/", async (req, res) => {
-//   try {
-//     const username = req.body.username;
-//     if (!validateEmail(username)) {
-//       throw "Username must be a valid email";
-//     }
-//     console.log(validateEmail(username));
-//     const user = await User.create(req.body);
-//     res.json(user);
-//     res.end();
-//   } catch (error) {
-//     return res.status(400).json({ error });
-//   }
-// });
-
-router.post('/', async (req, res) => {
-  try {
-    const username = req.body.username;
-    if (!validateEmail(username)) {
-      throw 'Username must be a valid email';
-    }
-    const user = await User.create(req.body);
-    res.json(user);
-  } catch (error) {
-    console.log(error);
-    return res.status(400).json(error);
-  }
 });
 
 router.get('/:id', async (req, res) => {
